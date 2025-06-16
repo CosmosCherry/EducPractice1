@@ -2,10 +2,6 @@
 #include <string>
 #include <vector>
 using namespace std;
-//3.	Уфологи обнаружили на некоторой местности K точек посадки НЛО. Так как всем известно, что инопланетяне очень любят 
-//треугольники, вам была поставлена задача найти треугольник с самой меньшей площадью, который только можно из них построить,
-//  определить его геометрический центр и провести от него линию к 
-//самой удаленной от него точке посадки НЛО. Узнав длину этой линии человечество получит шанс узнать хоть что-нибудь о наших братьях по разуму.
 
 float side(pair<int, int> x, pair<int, int> y) {
 	float z = fabs(sqrt(pow(x.first - y.first, 2) + pow(x.second - y.second, 2)));
@@ -36,9 +32,12 @@ int main() {
 	setlocale(LC_ALL, "rus");
 	srand(time(NULL));
 	int choice;
+	string task = "Задание:\nУфологи обнаружили на некоторой местности K точек посадки НЛО. Так как всем известно, что инопланетяне очень любят треугольники, вам была поставлена задача найти треугольник с самой меньшей площадью, который только можно из них построить, определить его геометрический центр и провести от него линию к самой удаленной от него точке посадки НЛО. Узнав длину этой линии человечество получит шанс узнать хоть что-нибудь о наших братьях по разуму.\n";
+	cout << task;
 	while (true) {
-		cout << "Меню:\n1 - Ввести количество точек НЛО;\n2 - Выйти из программы.\nВвод: ";
+		cout << "Меню:\n1 - Задание;\n2 - Повторить задание;\n3 - Выйти из программы.\n>> ";
 		cin >> choice;
+		if (cin.peek() != '\n') choice = 0;
 	switch (choice)
 	{
 		case 1:
@@ -46,8 +45,13 @@ int main() {
 			vector<pair<int,int>> Coord;
 			vector<pair<int, int>> sides;
 			float Square = 0;
+			string dot;
 			int dots = 0;
-			do { cout << "Введите количество точек НЛО от 3 до 100: "; cin.clear();  cin.ignore(numeric_limits<streamsize>::max(), '\n'); cin >> dots; } while (cin.fail() || dots < 3);
+			do { cout << "Введите количество точек НЛО от 3 до 100.\n>> "; 
+			cin.clear();  cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+			cin >> dots;
+			if (cin.peek() != '\n') dots =0;
+			} while (cin.fail() || dots < 3 || dots > 100);
 			for (int i = 0; i < dots;i++) 
 				Coord.push_back({ rand() % 201 - 100, rand() % 201 - 100});
 			for (int i = 0; i < Coord.size(); i++) {
@@ -67,7 +71,8 @@ int main() {
 			cout << "Длина от геометрического центра до дальней точки: " <<Geom(sides[0], sides[1], sides[2], Coord) << endl;
 			break;
 		}
-		case 2: cout << "Выход из программы."; exit(1);
+		case 2:cout << task;
+		case 3: cout << "Выход из программы."; exit(1);
 		default:
 			cin.clear();  cin.ignore(numeric_limits<streamsize>::max(), '\n');
 			cout << "Недопустимый ввод. Введите заново. ";
