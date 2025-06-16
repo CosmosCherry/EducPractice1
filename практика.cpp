@@ -16,24 +16,20 @@ float square(pair<int, int> x, pair<int, int> y, pair<int, int> z) {
 	float x1 = side(x, y);
 	float y1 = side(x, z);
 	float z1 = side(z, y);
-
-	//	fabs(sqrt(pow(x.first-y.first, 2)+ pow(x.second - y.second, 2)));
-	//float y1 = fabs(sqrt(pow(x.first - z.first, 2) + pow(x.second - z.second, 2)));
-	//float z1 = fabs(sqrt(pow(z.first - y.first, 2) + pow(z.second - y.second, 2)));
 	float p = (x1 + y1 + z1) / 2;
 	float S = sqrt(p*(p-z1)*(p-x1)*(p-y1));
 	return S;
 }
 
 
-pair<int, int> Geom(pair<int, int> x, pair<int, int> y, pair<int, int> z) {
+float Geom(pair<int, int> x, pair<int, int> y, pair<int, int> z, vector<pair<int, int>> Coord) {
 	pair<int, int> x1;
-	x1 = { (x.first + y.first)/2,(x.second + y.second) / 2 };
-	pair<int, int> y1;
-	y1 = { (x.first + z.first) / 2,(x.second + z.second) / 2 };
-	pair<int, int> z1;
-	z1 = { (z.first + y.first) / 2,(z.second + y.second) / 2 };
-	
+	x1 = { (x.first + y.first + z.first)/3,(x.second + y.second + z.second) / 3 };
+	float dlina = 0;
+	for (int i = 0; i < Coord.size(); i++) {
+		if (dlina <= side(Coord[i], x1)) dlina = side(Coord[i], x1);
+	}
+	return dlina;
 }
 
 int main() {
@@ -68,6 +64,7 @@ int main() {
 			}
 			cout << "Наименьшая площадь = " << Square << endl;
 			cout << "Координаты наименьшего треугольника (" << sides[0].first <<", "<< sides[0].second << "), (" << sides[1].first << ", " << sides[1].second << "), (" << sides[2].first << ", " << sides[2].second << ")" << endl;
+			cout << "Длина от геометрического центра до дальней точки: " <<Geom(sides[0], sides[1], sides[2], Coord) << endl;
 			break;
 		}
 		case 2: cout << "Выход из программы."; exit(1);
