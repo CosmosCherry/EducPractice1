@@ -9,23 +9,22 @@ float side(pair<int, int> x, pair<int, int> y) {
 }
 
 float square(pair<int, int> x, pair<int, int> y, pair<int, int> z) {
-	float x1 = side(x, y);
-	float y1 = side(x, z);
-	float z1 = side(z, y);
-	float p = (x1 + y1 + z1) / 2;
-	float S = sqrt(p*(p-z1)*(p-x1)*(p-y1));
+	float S = 0.5*abs((x.first * (y.second - z.second) +y.first * (z.second - x.second) + z.first * (x.second - y.second)));
 	return S;
 }
 
-
 float Geom(pair<int, int> x, pair<int, int> y, pair<int, int> z, vector<pair<int, int>> Coord) {
-	pair<int, int> x1;
+	pair<float, float> x1;
 	x1 = { (x.first + y.first + z.first)/3,(x.second + y.second + z.second) / 3 };
 	float dlina = 0;
-	for (int i = 0; i < Coord.size(); i++) {
+	for (size_t i = 0; i < Coord.size(); i++) {
 		if (dlina <= side(Coord[i], x1)) dlina = side(Coord[i], x1);
 	}
 	return dlina;
+}
+
+bool proverka( pair<int, int>& a, pair<int, int>& b, pair<int, int>& c) {
+	return a != b && b != c && a != c;
 }
 
 int main() {
@@ -52,15 +51,15 @@ int main() {
 			cin >> dots;
 			if (cin.peek() != '\n') dots =0;
 			} while (cin.fail() || dots < 3 || dots > 100);
-			for (int i = 0; i < dots;i++) 
+			for (size_t  i = 0; i < dots;i++)
 				Coord.push_back({ rand() % 201 - 100, rand() % 201 - 100});
-			for (int i = 0; i < Coord.size(); i++) {
-				for (int j = i+1; j < Coord.size(); j++) {
-					for (int z = j+1; z < Coord.size(); z++) {
-						if ((Square > square(Coord[i], Coord[j], Coord[z]) && Coord[i]!= Coord[j] && Coord[z] != Coord[j] && Coord[i]!= Coord[z]) || Square == 0) {
-							Square = square(Coord[i], Coord[j], Coord[z]);
-							sides.clear();
-							sides.push_back(Coord[i]); sides.push_back(Coord[j]); sides.push_back(Coord[z]);
+			for (size_t  i = 0; i < dots; i++) {
+				for (size_t  j = i+1; j < dots; j++) {
+					for (size_t  z = j+1; z < dots; z++) {
+						float current_square = square(Coord[i], Coord[j], Coord[z]);
+						if ((Square > current_square && proverka(Coord[i],Coord[j], Coord[z])) || Square == 0) {
+							Square = current_square;
+							sides = { Coord[i],Coord[j],Coord[z] };
 						}
 					}
 				}
