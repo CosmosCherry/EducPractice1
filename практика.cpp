@@ -7,16 +7,34 @@ using namespace std;
 //  определить его геометрический центр и провести от него линию к 
 //самой удаленной от него точке посадки НЛО. Узнав длину этой линии человечество получит шанс узнать хоть что-нибудь о наших братьях по разуму.
 
+float side(pair<int, int> x, pair<int, int> y) {
+	float z = fabs(sqrt(pow(x.first - y.first, 2) + pow(x.second - y.second, 2)));
+	return z;
+}
+
 float square(pair<int, int> x, pair<int, int> y, pair<int, int> z) {
-	float x1 = fabs(sqrt(pow(x.first-y.first, 2)+ pow(x.second - y.second, 2)));
-	float y1 = fabs(sqrt(pow(x.first - z.first, 2) + pow(x.second - z.second, 2)));
-	float z1 = fabs(sqrt(pow(z.first - y.first, 2) + pow(z.second - y.second, 2)));
+	float x1 = side(x, y);
+	float y1 = side(x, z);
+	float z1 = side(z, y);
+
+	//	fabs(sqrt(pow(x.first-y.first, 2)+ pow(x.second - y.second, 2)));
+	//float y1 = fabs(sqrt(pow(x.first - z.first, 2) + pow(x.second - z.second, 2)));
+	//float z1 = fabs(sqrt(pow(z.first - y.first, 2) + pow(z.second - y.second, 2)));
 	float p = (x1 + y1 + z1) / 2;
 	float S = sqrt(p*(p-z1)*(p-x1)*(p-y1));
 	return S;
 }
 
-pair<int, int> 
+
+pair<int, int> Geom(pair<int, int> x, pair<int, int> y, pair<int, int> z) {
+	pair<int, int> x1;
+	x1 = { (x.first + y.first)/2,(x.second + y.second) / 2 };
+	pair<int, int> y1;
+	y1 = { (x.first + z.first) / 2,(x.second + z.second) / 2 };
+	pair<int, int> z1;
+	z1 = { (z.first + y.first) / 2,(z.second + y.second) / 2 };
+	
+}
 
 int main() {
 	setlocale(LC_ALL, "rus");
