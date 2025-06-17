@@ -4,7 +4,7 @@
 using namespace std;
 
 float side(pair<int, int> x, pair<int, int> y) {
-	float z = fabs(sqrt(pow(x.first - y.first, 2) + pow(x.second - y.second, 2)));
+	float z = abs(sqrt(pow(x.first - y.first, 2) + pow(x.second - y.second, 2)));
 	return z;
 }
 
