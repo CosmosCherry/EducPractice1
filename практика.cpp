@@ -70,7 +70,7 @@ int main() {
 			cout << "Длина от геометрического центра до дальней точки: " <<Geom(sides[0], sides[1], sides[2], Coord) << endl;
 			break;
 		}
-		case 2:cout << task;
+		case 2:cout << task; break;
 		case 3: cout << "Выход из программы."; exit(1);
 		default:
 			cin.clear();  cin.ignore(numeric_limits<streamsize>::max(), '\n');
