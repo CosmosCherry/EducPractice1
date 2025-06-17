@@ -23,7 +23,7 @@ float Geom(pair<int, int> x, pair<int, int> y, pair<int, int> z, vector<pair<int
 	return dlina;
 }
 
-bool proverka( pair<int, int>& a, pair<int, int>& b, pair<int, int>& c) {
+bool proverka( pair<int, int> a, pair<int, int> b, pair<int, int> c) {
 	return a != b && b != c && a != c;
 }
 
