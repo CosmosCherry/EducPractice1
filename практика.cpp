@@ -25,13 +25,32 @@ TEST(SideTest, Negative) {
 
 TEST(SideTest, SamePoints) { 
 	cout << "Входные координаты: { 100,100 }, { 100,100 }.\nВыходные данные: 0" << endl;
-	EXPECT_FLOAT_EQ(side({ 100,100 }, { 100,100 }), 0.0); }
+	EXPECT_EQ(side({ 100,100 }, { 100,100 }), 0.0); }
 
 float square(pair<int, int> x, pair<int, int> y, pair<int, int> z) {
 	float S = 0.5 * abs((x.first * (y.second - z.second) + y.first * (z.second - x.second) + z.first * (x.second - y.second)));
 	return S;
 }
 
+TEST(SquareTest, PositiveCoords) {
+	cout << "Входные координаты: {100,100}, {0,0}, {75,25}.\nВыходные данные: 1250" << endl;
+	EXPECT_EQ(square({ 100,100 }, { 0,0 }, { 75,25 }), 2500);
+}
+
+TEST(SquareTest, NegativeCoords) {
+	cout << "Входные координаты: {-100,-100}, {0,0}, {-75,-25}.\nВыходные данные: 1250" << endl;
+	EXPECT_EQ(square({ -100,-100 }, { 0,0 }, { -75,-25 }), 2500);
+}
+
+TEST(SquareTest, RightTriangle) {
+	cout << "Входные координаты: {0,0}, {3,0}, {0,4}.\nВыходные данные: 6" << endl;
+	EXPECT_EQ(square({ 0,0 }, { 3,0 }, { 0,4 }), 6.0);
+}
+
+TEST(SquareTest, SamePoints) {
+	cout << "Входные координаты: {5,5}, {5,5}, {5,5}.\nВыходные данные: 0" << endl;
+	EXPECT_EQ(square({ 5,5 }, { 5,5 }, { 5,5 }), 0.0);
+}
 float Geom(pair<int, int> x, pair<int, int> y, pair<int, int> z, vector<pair<int, int>> Coord) {
 	pair<float, float> x1;
 	x1 = { (x.first + y.first + z.first) / 3,(x.second + y.second + z.second) / 3 };
@@ -42,9 +61,35 @@ float Geom(pair<int, int> x, pair<int, int> y, pair<int, int> z, vector<pair<int
 	return dlina;
 }
 
+TEST(GeomTest, PositiveCoords) {
+	vector<pair<int, int>> coord = { {10,50}, {0,0}, {75,25}, {100,100} };
+	cout << "Входные данные: Coord = { {10,50}, {0,0}, {75,25}, {100,100} }\n"<< "Выходные данные: 103.97"<< endl;
+	EXPECT_NEAR(Geom(coord[0], coord[1], coord[2], coord), 103.97, 0.01);
+}
+
+TEST(GeomTest, NegativeCoords) {
+	vector<pair<int, int>> coord = { {-10,-50}, {0,0}, {-75,-25}, {-100,-100} };
+	cout << "Входные данные: Coord = { {-10,-50}, {0,0}, {-75,-25}, {-100,-100} }\n"<< "Выходные данные: 103.97" << endl;
+	EXPECT_NEAR(Geom(coord[0], coord[1], coord[2], coord), 103.97, 0.01);
+}
+
+TEST(GeomTest, ThreePoints) {
+	vector<pair<int, int>> coord = { {0,0}, {3,0}, {0,4} };
+	cout << "Входные данные: Coord = { {0,0}, {3,0}, {0,4} }\n" << "Выходные данные: 3.16"  << endl;
+	EXPECT_NEAR(Geom(coord[0], coord[1], coord[2], coord), 3.16, 0.01);
+}
+
+TEST(GeomTest, SamePoints) {
+	vector<pair<int, int>> coord = { {10,10}, {10,10}, {10,10} };
+	cout << "Входные данные: Coord = { {10,10}, {10,10}, {10,10} }\n" << "Выходные данные: 0" << endl;
+	EXPECT_EQ(Geom(coord[0], coord[1], coord[2], coord), 0.0);
+}
+
 bool proverka(pair<int, int> a, pair<int, int> b, pair<int, int> c) {
 	return a != b && b != c && a != c;
 }
+
+
 
 float MinSquare(vector<pair<int, int>>& points, vector<pair<int, int>> Coord, int dots) {
 	float Square = 0;
@@ -71,7 +116,7 @@ int main() {
 	string task = "Задание:\nУфологи обнаружили на некоторой местности K точек посадки НЛО. Так как всем известно, что инопланетяне очень любят треугольники, вам была поставлена задача найти треугольник с самой меньшей площадью, который только можно из них построить, определить его геометрический центр и провести от него линию к самой удаленной от него точке посадки НЛО. Узнав длину этой линии человечество получит шанс узнать хоть что-нибудь о наших братьях по разуму.\n";
 	cout << task;
 	while (true) {
-		cout << "Меню:\n1 - Решение;\n2 - Повторить постановку задания;\n3 - Выйти из программы.\n>> ";
+		cout << "Меню:\n1 - Решение;\n2 - Повторить постановку задания;\n3 - Выйти из программы;\n4 - Тесты.\n>> ";
 		cin >> choice;
 		if (cin.peek() != '\n') choice = 0;
 		switch (choice)
