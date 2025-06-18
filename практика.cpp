@@ -63,25 +63,25 @@ float Geom(pair<int, int> x, pair<int, int> y, pair<int, int> z, vector<pair<int
 
 TEST(GeomTest, PositiveCoords) {
 	vector<pair<int, int>> coord = { {10,50}, {0,0}, {75,25}, {100,100} };
-	cout << "Входные данные: Coord = { {10,50}, {0,0}, {75,25}, {100,100} }\n"<< "Выходные данные: 103.97"<< endl;
+	cout << "Входные данные: Coord = { {10,50}, {0,0}, {75,25}, {100,100} }\nВыходные данные: 103.97"<< endl;
 	EXPECT_NEAR(Geom(coord[0], coord[1], coord[2], coord), 103.97, 0.01);
 }
 
 TEST(GeomTest, NegativeCoords) {
 	vector<pair<int, int>> coord = { {-10,-50}, {0,0}, {-75,-25}, {-100,-100} };
-	cout << "Входные данные: Coord = { {-10,-50}, {0,0}, {-75,-25}, {-100,-100} }\n"<< "Выходные данные: 103.97" << endl;
+	cout << "Входные данные: Coord = { {-10,-50}, {0,0}, {-75,-25}, {-100,-100} }\nВыходные данные: 103.97" << endl;
 	EXPECT_NEAR(Geom(coord[0], coord[1], coord[2], coord), 103.97, 0.01);
 }
 
 TEST(GeomTest, ThreePoints) {
 	vector<pair<int, int>> coord = { {0,0}, {3,0}, {0,4} };
-	cout << "Входные данные: Coord = { {0,0}, {3,0}, {0,4} }\n" << "Выходные данные: 3.16"  << endl;
+	cout << "Входные данные: Coord = { {0,0}, {3,0}, {0,4} }\nВыходные данные: 3.16"  << endl;
 	EXPECT_NEAR(Geom(coord[0], coord[1], coord[2], coord), 3.16, 0.01);
 }
 
 TEST(GeomTest, SamePoints) {
 	vector<pair<int, int>> coord = { {10,10}, {10,10}, {10,10} };
-	cout << "Входные данные: Coord = { {10,10}, {10,10}, {10,10} }\n" << "Выходные данные: 0" << endl;
+	cout << "Входные данные: Coord = { {10,10}, {10,10}, {10,10} }\nВыходные данные: 0" << endl;
 	EXPECT_EQ(Geom(coord[0], coord[1], coord[2], coord), 0.0);
 }
 
@@ -89,7 +89,25 @@ bool proverka(pair<int, int> a, pair<int, int> b, pair<int, int> c) {
 	return a != b && b != c && a != c;
 }
 
+TEST(ProverkaTest, PositivePoints) {
+	cout << "Входные данные: a={1,2}, b={3,4}, c={100,100}\nВыходные данные: true" << endl;
+	EXPECT_TRUE(proverka({ 1,2 }, { 3,4 }, { 100,100 }));
+}
 
+TEST(ProverkaTest, TwoSamePoints) {
+	cout << "Входные данные: a={1,1}, b={1,1}, c={2,2}\nВыходные данные: false" << endl;
+	EXPECT_FALSE(proverka({ 1,1 }, { 1,1 }, { 2,2 }));
+}
+
+TEST(ProverkaTest, NegativePoints) {
+	cout << "Входные данные: a={-3,-1}, b={-100,-100}, c={-2,-2}\nВыходные данные: true" << endl;
+	EXPECT_TRUE(proverka({ -3,-1 }, { -100,-100 }, { -2,-2 }));
+}
+
+TEST(ProverkaTest, AllSamePoints) {
+	cout << "Входные данные: a={5,5}, b={5,5}, c={5,5}\nВыходные данные: false" << endl;
+	EXPECT_FALSE(proverka({ 5,5 }, { 5,5 }, { 5,5 }));
+}
 
 float MinSquare(vector<pair<int, int>>& points, vector<pair<int, int>> Coord, int dots) {
 	float Square = 0;
@@ -108,7 +126,12 @@ float MinSquare(vector<pair<int, int>>& points, vector<pair<int, int>> Coord, in
 	return Square;
 }
 
-
+TEST(MinSquareTest, ppp) {
+	cout << "Входные данные: a={5,5}, b={5,5}, c={5,5}\nВыходные данные: false" << endl;
+	vector<pair<int, int>> points;
+	float Square = MinSquare(points, { { 5, 5 }, { 5,5 }, { 5,5 } }, 3);
+	EXPECT_EQ(Square, 0);
+}
 int main() {
 	setlocale(LC_ALL, "rus");
 	srand(time(NULL));
